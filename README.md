@@ -1,4 +1,4 @@
-# carbon_credits_SentAnalysis
+# Sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter.
 I'm working on a solo project of sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter. 
 
 ### Porject Description 
