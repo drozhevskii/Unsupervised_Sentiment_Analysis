@@ -3,7 +3,7 @@ I'm working on a solo project of sentiment analysis of public opinions on the bl
 
 ### Porject Description 
 
-![Project structure diagram](images/dsl_diag1.png)
+![Project structure diagram](images/dsl_prjstructure.png)
 
 The project's goals were to analyze tweets in English that can help understand public opinion on blockchain and its role in the transition to a net-zero economy around the world and find possible correlations between the geo-political and demographical background of those Tweets.
 
