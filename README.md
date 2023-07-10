@@ -1,7 +1,7 @@
 # Sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter.
 ![DSL logo](images/dsl_prjstructure.png)
 
-[Dynamic Sustainability Lab]([images/dsl_prjstructure.png](https://www.dynamicslab.org/))
+[Dynamic Sustainability Lab](images/DSL_logo1.png)
 
 I'm working on a solo project of sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter. 
 
@@ -22,11 +22,11 @@ In this paper, the project collects and analyzes the contents of around 225,098 
 The library used for data scraping is [snscrape](https://github.com/JustAnotherArchivist/snscrape)
 
 #### Methods
--**K-Means**. First, I wanted to explore one of the most popular techniques for unsupervised sentiment analysis, K-Means clustering. The size of the dataset made it possible to create a large enough dictionary of words for the Word2vec model. I decided to work with 3 clusters: positive, negative, and neutral. The neutral cluster is supposed to collect possible spam tweets or tweets with not enough information for humans to determine the sentiment.
++ **K-Means**. First, I wanted to explore one of the most popular techniques for unsupervised sentiment analysis, K-Means clustering. The size of the dataset made it possible to create a large enough dictionary of words for the Word2vec model. I decided to work with 3 clusters: positive, negative, and neutral. The neutral cluster is supposed to collect possible spam tweets or tweets with not enough information for humans to determine the sentiment.
 
--**VADER** (Valence Aware Dictionary and sEntiment Reasoner). Second, I imported and applied the VADER algorithm on the same per-processed text as that given to K-Means. VADER is a key-based algorithm for sentiment analysis, which means it has its own dictionary of words for sentiment classification 
++ **VADER** (Valence Aware Dictionary and sEntiment Reasoner). Second, I imported and applied the VADER algorithm on the same per-processed text as that given to K-Means. VADER is a key-based algorithm for sentiment analysis, which means it has its own dictionary of words for sentiment classification.
 
--**BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis (6). BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model
++ **BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis (6). BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model.
 
 #### Pre-processing
 
