@@ -20,14 +20,14 @@ In this paper, the project collects and analyzes the contents of around 225,098 
 
 The library used for data scraping is [snscrape](https://github.com/JustAnotherArchivist/snscrape)
 
-#### Methods
+### Methods
 + **K-Means**. First, I wanted to explore one of the most popular techniques for unsupervised sentiment analysis, K-Means clustering. The size of the dataset made it possible to create a large enough dictionary of words for the Word2vec model. I decided to work with 3 clusters: positive, negative, and neutral. The neutral cluster is supposed to collect possible spam tweets or tweets with not enough information for humans to determine the sentiment.
 
 + **VADER** (Valence Aware Dictionary and sEntiment Reasoner). Second, I imported and applied the VADER algorithm on the same per-processed text as that given to K-Means. VADER is a key-based algorithm for sentiment analysis, which means it has its own dictionary of words for sentiment classification.
 
 + **BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis (6). BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model.
 
-#### Pre-processing
+### Pre-processing
 
 Import necessary libraries and functions.
 ```
@@ -98,7 +98,8 @@ def clean_tweet(tweet):
     return test
 ```
 
-#### KMeans Implementation
+
+### KMeans Implementation
 
 Create embedding vectors from tweets using the [Gensim library](https://radimrehurek.com/gensim/models/word2vec.html):
 ```
@@ -168,7 +169,8 @@ for i in range(len(data18)):
     data18['sentiment'][i] = get_sentiments(x, words_dict)
 ```
 
-#### VADER Implementation
+
+### VADER Implementation
 
 Import the sentiment analyzer:
 ```
@@ -196,7 +198,8 @@ def sentimentPredict(score):
 data18['sentiments_val2'] =data18['compound'].apply(lambda x: sentimentPredict(x))
 ```
 
-#### BERT Implementation
+
+### BERT Implementation
 
 Install necessary libraries:
 ```
@@ -212,7 +215,46 @@ from transformers import pipeline
 # Downloading the sentiment analysis model
 SentimentClassifier = pipeline("sentiment-analysis")
 ```
+Write a BERT function to apply to the dataset:
+```
+def FunctionBERTSentiment(inpText):
+  return(SentimentClassifier(inpText)[0]['label'])
+```
+Calling BERT-based sentiment score function for every tweet:
+```
+data18['sentiments_val3']=data18['cleaned_tweet'].apply(FunctionBERTSentiment)
+```
 
 
+### Average and final plots
+
+Turn all the sentiments into numbers:
+```
+def sentimentNum(score):
+    if score == 'positive':
+        return 1
+    elif score == 'negative': 
+        return -1
+    else:
+        return 0
+
+# sentiment values refer to KMeans, VADER, and BERT
+data18['sentiments_val'] =data18['sentiments_val'].apply(lambda x: sentimentNum(x))
+data18['sentiments_val2'] =data18['sentiments_val2'].apply(lambda x: sentimentNum(x))
+data18['sentiments_val3'] =data18['sentiments_val3'].apply(lambda x: sentimentNum(x))
+```
+Write a function to average the results and cluster into sentiments:
+```
+def sentimentAvg(val1, val2, val3):
+    summ = val1 + val2 + val3
+    if summ >= 1:
+        return 'positive'
+    elif summ < 0: 
+        return 'negative'
+    else:
+        return 'neutral'
+
+data18['sent_avg'] = data18.apply(lambda x: sentimentAvg(val1 = x['sentiments_val'], val2 = x['sentiments_val2'], val3 = x['sentiments_val3']), axis=1)
+```
 
 
