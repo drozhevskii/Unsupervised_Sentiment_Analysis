@@ -1,7 +1,6 @@
 # Sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter.
-![DSL logo](images/dsl_prjstructure.png)
-
-[Dynamic Sustainability Lab](images/DSL_logo1.png)
+![DSL logo](images/DSL_logo1.png)
+[Dynamic Sustainability Lab](https://www.dynamicslab.org/)
 
 I'm working on a solo project of sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter. 
 
@@ -40,7 +39,7 @@ lemma = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
 ```
 
-Write function to clean and tokenize the data:
+Write a function to clean and tokenize the data:
 ```
 def clean_tweet(tweet):
     if type(tweet) == float:
@@ -99,4 +98,121 @@ def clean_tweet(tweet):
     return test
 ```
 
-#### Methods
+#### KMeans Implementation
+
+Create embedding vectors from tweets using the [Gensim library](https://radimrehurek.com/gensim/models/word2vec.html):
+```
+sent = [row for row in data18["clean_tweet"]]
+# use Gensim Phrases package to automatically detect common phrases (bigrams) from a list of sentences.
+phrases = Phrases(sent, min_count=1, progress_per=50000)
+bigram = gensim.models.phrases.Phraser(phrases)
+sentences = bigram[sent]
+sentences[1]
+
+# https://www.kaggle.com/pierremegret/gensim-word2vec-tutorial
+```
+Initialize Word2vec model:
+```
+#Initializing the word2vec model
+w2v_model = Word2Vec(min_count=4,
+                     window=5,
+                     vector_size =300,
+                     sample=1e-5, 
+                     alpha=0.03, 
+                     min_alpha=0.0007, 
+                     negative=20,
+                     seed= 42,
+                     workers=multiprocessing.cpu_count()-1)
+
+
+#building vocab of the word2vec model from the custom data
+w2v_model.build_vocab(sentences, progress_per=50000)
+
+# https://towardsdatascience.com/unsupervised-sentiment-analysis-a38bf1906483
+```
+Train Word2vec model:
+```
+w2v_model.train(sentences, total_examples=w2v_model.corpus_count, epochs=60, report_delay=1)
+```
+Feeding the embeddings to a KMeans model to cluster words into positive, negative, and neutral clusters:
+```
+model = KMeans(n_clusters=3, max_iter=1000, random_state=42, n_init=50).fit(X=word_vectors.vectors.astype('double'))
+```
+Create a dictionary of the word and its cluster value:
+```
+words_dict = dict(zip(words.words, words.cluster_value))
+```
+Define a function to get the sentiment for the entire tweet:
+```
+def get_sentiments(x,words_dict):
+    total=0
+    count=0
+    test=x["clean_tweet"]
+    #print(test)
+    for t in test:
+        if words_dict.get(t):
+            total+=int(words_dict.get(t))
+            #print('adding', int(words_dict.get(t)))
+        count+=1
+    if count == 0:
+        sentiment = 'no data'
+    else:
+        avg=total/count
+        sentiment=-1 if avg<-0.15 else 1 if avg >0.15 else 0
+    return sentiment
+```
+Apply the function on the dataset:
+```
+for i in range(len(data18)):
+    x = data18.iloc[i]
+    data18['sentiment'][i] = get_sentiments(x, words_dict)
+```
+
+#### VADER Implementation
+
+Import the sentiment analyzer:
+```
+nltk.download('vader_lexicon')
+sid = SentimentIntensityAnalyzer()
+```
+Apply the polarity function to calculate the sentiment scores:
+```
+data18['sentiments_val2'] = data18['cleaned_tweet'].apply(lambda tweet: sid.polarity_scores(tweet))
+```
+Calculate the compound score for each tweet:
+```
+data18['compound']  = data18['sentiments_val2'].apply(lambda score_dict: score_dict['compound'])
+```
+Write a function to cluster the tweets based on compound value:
+```
+def sentimentPredict(score):
+    if score >= 0.05:
+        return "positive"
+    elif score <= -0.05: 
+        return "negative"
+    else:
+        return "neutral"
+
+data18['sentiments_val2'] =data18['compound'].apply(lambda x: sentimentPredict(x))
+```
+
+#### BERT Implementation
+
+Install necessary libraries:
+```
+# installing the library 'transformers' which contains BERT implementation
+!pip install transformers
+ 
+# installing the library tensorflow
+!pip install tensorflow
+
+# importing the pipeline module
+from transformers import pipeline
+ 
+# Downloading the sentiment analysis model
+SentimentClassifier = pipeline("sentiment-analysis")
+```
+
+
+
+
