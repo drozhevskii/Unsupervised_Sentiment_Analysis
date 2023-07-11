@@ -11,7 +11,7 @@ The project's goals were to analyze tweets in English that can help understand p
 ![Project structure diagram](images/dsl_prjstructure.png)
 
 The project's poster is available through [this link](reports/DSL_poster_v2.pdf). The project's paper is [here](reports/DSL_paper_v1.pdf).
-The full code is available here.
+The full code is available [here](code/DSL_tweetsMine.ipynb).
 
 ### Project Overview:
 
