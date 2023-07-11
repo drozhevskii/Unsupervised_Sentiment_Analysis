@@ -24,8 +24,8 @@ The notebook and explanation of that part can be found here.
   
   The library used for data scraping is [snscrape](https://github.com/JustAnotherArchivist/snscrape)
   The code for the Twitter data scraping part is [here](code/DSL_tweetsMine.ipynb).
-<details>
-<details>
+
+
   <summary>Methods:</summary>
   
   ### Methods
