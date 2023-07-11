@@ -35,7 +35,8 @@ The notebook and explanation of that part can be found here.
   + **VADER** (Valence Aware Dictionary and sEntiment Reasoner). Second, I imported and applied the VADER algorithm on the same per-processed text as that given to K-Means. VADER is a key-based algorithm for sentiment analysis, which means it has its own dictionary of words for sentiment classification.
   
   + **BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis. BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model.
-
+<details>
+  
 <details>
   <summary>Pre-processing:</summary>
   
@@ -109,6 +110,7 @@ The notebook and explanation of that part can be found here.
   
       return test
   ```
+<details>
   
 <details>
   <summary>KMeans:</summary>
@@ -182,6 +184,7 @@ The notebook and explanation of that part can be found here.
       x = data18.iloc[i]
       data18['sentiment'][i] = get_sentiments(x, words_dict)
   ```
+<details>
   
 <details>
   <summary>VADER:</summary>
@@ -213,6 +216,7 @@ The notebook and explanation of that part can be found here.
   
   data18['sentiments_val2'] =data18['compound'].apply(lambda x: sentimentPredict(x))
   ```
+<details>
   
 <details>
   <summary>BERT:</summary>
@@ -242,6 +246,7 @@ The notebook and explanation of that part can be found here.
   ```
   data18['sentiments_val3']=data18['cleaned_tweet'].apply(FunctionBERTSentiment)
   ```
+<details> 
   
 <details>
   <summary>Final results:</summary>
@@ -292,7 +297,8 @@ The notebook and explanation of that part can be found here.
   plt.savefig("sent_dist_tweets_avg.png")
   ```
   ![final_results](images/avg_tweets2122.png)
-
+  
+<details>
 
 For the full code files, go [here](code/).
 
