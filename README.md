@@ -24,7 +24,7 @@ The notebook and explanation of that part can be found here.
   
   The library used for data scraping is [snscrape](https://github.com/JustAnotherArchivist/snscrape)
   The code for the Twitter data scraping part is [here](code/DSL_tweetsMine.ipynb).
-
+<details>
 <details>
   <summary>Methods:</summary>
   
@@ -33,7 +33,7 @@ The notebook and explanation of that part can be found here.
   
   + **VADER** (Valence Aware Dictionary and sEntiment Reasoner). Second, I imported and applied the VADER algorithm on the same per-processed text as that given to K-Means. VADER is a key-based algorithm for sentiment analysis, which means it has its own dictionary of words for sentiment classification.
   
-  + **BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis (6). BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model.
+  + **BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis. BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model.
 
 <details>
   <summary>Pre-processing:</summary>
