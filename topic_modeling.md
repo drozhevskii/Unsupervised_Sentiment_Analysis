@@ -6,6 +6,8 @@
 
 Here, I expand my research to examine the topics people were talking about when they mentioned carbon credits or Net Zero. I used [Linear Discriminant Analysis](https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html) on the cleaned training data. Latent Dirichlet Allocation (LDA) is a Bayesian network that explains a set of observations through unobserved groups, and each group explains why some parts of the data are similar.
 
+The full code for this part is [here]().
+
 ### Required libraries 
 ```
 #Base and Cleaning 
@@ -89,6 +91,9 @@ data21["clean_tweet"]=data21["Tweet"].apply(lambda x:clean_tweet(x))
 ```
 
 ### LDA method
+
+First, compute the base model to make sure everything in the pipeline works. 
+After that, create a loop to get the best parameter and build the final model.
 
 Create a id2word dictionary:
 ```
@@ -211,6 +216,20 @@ gs_end_time = time.time()
 <img src="images/num_topics21.png" width=60% height=60%>
 
 The table and graph above show the results of the cross-validation with learning decay and a number of topics as tuning parameters. The most effective learning decay rate was 0.7 and the most optimal number of topics was 20 with the final coherence score of 43.5%.
+
+
+### Improving the interpretability of topics with ChatGPT. 
+In this section, I tried improving the coherence score of the final model. I chose the top 3 raw topics out of 20 that the LDA model generated. They do not sound coherent enough for business leaders or stakeholders to evaluate, so I decided to enhance their interpretability with the help of ChatGPT.
+
+These are the topics before restructuring them with the ChatGPT prompt:
+
+<img src="images/table_topics1.png" width=40% height=40%>
+
+After getting raw topics, I used those raw topics in ChatGPT with the following prompt: “Paraphrase this sentence to increase its interpretability in the given domain“. I collected the improved topics in the following table.
+
+<img src="images/table_topics2.png" width=40% height=40%>
+
+
 
 
 
