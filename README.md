@@ -275,7 +275,6 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
   ```
   ![final_results](images/avg_tweets2122.png)
 
-<details>
 
 For the full code files, go [here](code/).
 
