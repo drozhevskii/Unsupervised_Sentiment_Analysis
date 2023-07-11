@@ -118,5 +118,94 @@ Filter for words:
 ```
 words = [re.findall(r'"([^"]*)"',t[1]) for t in base_model.print_topics()]
 ```
+Create Topics: 
+```
+topics = [' '.join(t[0:10]) for t in words]
+```
+Get the topics:
+```
+for id, t in enumerate(topics): 
+    print(f"------ Topic {id} ------")
+    print(t, end="\n\n")
+```
+```
+------ Topic 0 ------
+energy read amp emission build new uk help reach transition
+
+------ Topic 1 ------
+carbon amp market emission need credit offset climate new plan
+
+------ Topic 2 ------
+amp energy climate need gas year make power green emission
+
+------ Topic 3 ------
+amp help business support project work great u new join
+
+------ Topic 4 ------
+zero net amp climate join emission 2022 target achieve transition
+```
+Compute Perplexity:
+```
+# a measure of how good the model is. lower the better
+base_perplexity = base_model.log_perplexity(corpus)
+print('\nPerplexity: ', base_perplexity) 
+
+# Compute Coherence Score
+coherence_model = CoherenceModel(model=base_model, texts=data21["clean_tweet"], 
+                                   dictionary=id2word, coherence='c_v')
+coherence_lda_model_base = coherence_model.get_coherence()
+print('\nCoherence Score: ', coherence_lda_model_base)
+```
+```
+Perplexity:  -7.6634265387024385
+
+Coherence Score:  0.3637468757745862
+```
+
+### Hypertuning
+To hyper-tune the model, I used several components or topics and the learning rate of the model. Those parameters control how many meaningful labels the model tries to learn from the data. The learning rate affects
+the convergence of the loss function and so influences the quality of discovered topics. To measure the performance of the model, I used perplexity and coherence scores. Perplexity metric is widely used for language model evaluation and is monotonically decreasing in the likelihood of the test data, and is algebraically equivalent to the inverse of the geometric mean per-word likelihood. A lower perplexity score indicates better generalization performance. The coherence score reflects the interpretability of the resulting topics or themes. The lower the score, the hard it is to interpret or understand topics.
+
+```
+gs_start_time = time.time()
+
+# Define Search Param
+search_params = {'n_components': [10, 15, 20], 'learning_decay': [.5, .7, .9]}
+
+# Init the Model
+lda = LatentDirichletAllocation()
+
+# Init Grid Search Class
+model = GridSearchCV(lda, param_grid=search_params)
+
+# Do the Grid Search
+model.fit(data_vectorized)
+GridSearchCV(cv=None, error_score='raise',
+             estimator=LatentDirichletAllocation(batch_size=128, 
+                                                 doc_topic_prior=None,
+                                                 evaluate_every=-1, 
+                                                 learning_decay=0.7, 
+                                                 learning_method=None,
+                                                 learning_offset=10.0, 
+                                                 max_doc_update_iter=100, 
+                                                 max_iter=10,
+                                                 mean_change_tol=0.001, 
+                                                 n_components=10, 
+                                                 n_jobs=1,
+                                                 perp_tol=0.1, 
+                                                 random_state=None,
+                                                 topic_word_prior=None, 
+                                                 total_samples=1000000.0, 
+                                                 verbose=0),
+             n_jobs=None,
+             param_grid={'n_topics': [10, 15, 20], 
+                         'learning_decay': [0.5, 0.7, 0.9]},
+             pre_dispatch='2*n_jobs', refit=True, return_train_score=False,
+             scoring=None, verbose=0)
+
+gs_end_time = time.time()
+```
+
+The table above shows the results of the cross-validation with learning decay and a number of topics as tuning parameters. The most effective learning decay rate was 0.7 and the most optimal number of topics was 20 with the final coherence score of 43.5%.
 
 
