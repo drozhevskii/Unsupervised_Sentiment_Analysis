@@ -11,7 +11,10 @@ The project's goals were to analyze tweets in English that can help understand p
 ![Project structure diagram](images/dsl_prjstructure.png)
   
 The project's poster is available through [this link](reports/DSL_poster_v2.pdf). The project's paper is [here](reports/DSL_paper_v1.pdf).
-The full code is available [here](code/DSL_tweetsMine.ipynb).
+The full code is available [here](code/). 
+
+As a side goal, I also performed topic modeling on the cleaned data to discover which topics people were mostly engaged in while talking about carbon credits.
+The notebook and explanation of that part can be found here.
 
 <details>
   <summary>Data:</summary>
@@ -20,7 +23,7 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
   In this paper, the project collects and analyzes the contents of around 225,098 English tweets that discussed either the current general perception of carbon credits or the blockchain role in the transition to a net-zero carbon economy in the past 2 years period (1/1/2021 – 10/31/2022).
   
   The library used for data scraping is [snscrape](https://github.com/JustAnotherArchivist/snscrape)
-  The code for the Twitter data scraping part is here.
+  The code for the Twitter data scraping part is [here](code/DSL_tweetsMine.ipynb).
 
 <details>
   <summary>Methods:</summary>
@@ -31,6 +34,9 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
   + **VADER** (Valence Aware Dictionary and sEntiment Reasoner). Second, I imported and applied the VADER algorithm on the same per-processed text as that given to K-Means. VADER is a key-based algorithm for sentiment analysis, which means it has its own dictionary of words for sentiment classification.
   
   + **BERT** (Bidirectional Encoder Representations for Transformers). Finally, I decided to run BERT, which is a model with pre-trained language representations that has an internal library for sentiment analysis (6). BERT is able to identify sentiment based on common keywords, sentence structure, as well as the context of each tweet based on the generated embeddings. By design, BERT is able to identify either positive or negative tweets. It is one of the most advanced unsupervised methods for sentiment analysis yet and I wanted to see how similar its results are to the K-Means model.
+
+<details>
+  <summary>Pre-processing:</summary>
   
   ### Pre-processing
   
@@ -103,6 +109,8 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
       return test
   ```
   
+<details>
+  <summary>KMeans:</summary>
   
   ### KMeans Implementation
   
@@ -174,6 +182,8 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
       data18['sentiment'][i] = get_sentiments(x, words_dict)
   ```
   
+<details>
+  <summary>VADER:</summary>
   
   ### VADER Implementation
   
@@ -203,6 +213,8 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
   data18['sentiments_val2'] =data18['compound'].apply(lambda x: sentimentPredict(x))
   ```
   
+<details>
+  <summary>BERT:</summary>
   
   ### BERT Implementation
   
@@ -230,6 +242,8 @@ The full code is available [here](code/DSL_tweetsMine.ipynb).
   data18['sentiments_val3']=data18['cleaned_tweet'].apply(FunctionBERTSentiment)
   ```
   
+<details>
+  <summary>Final results:</summary>
   
   ### Average and final plots
   
