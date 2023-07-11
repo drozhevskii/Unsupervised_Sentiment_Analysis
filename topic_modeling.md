@@ -208,6 +208,10 @@ gs_end_time = time.time()
 
 <img src="images/table_hypertuning.png" width=40% height=40%>
 
-The table above shows the results of the cross-validation with learning decay and a number of topics as tuning parameters. The most effective learning decay rate was 0.7 and the most optimal number of topics was 20 with the final coherence score of 43.5%.
+<img src="images/num_topics21.png" width=40% height=40%>
+
+The table and graph above show the results of the cross-validation with learning decay and a number of topics as tuning parameters. The most effective learning decay rate was 0.7 and the most optimal number of topics was 20 with the final coherence score of 43.5%.
+
+
 
 
