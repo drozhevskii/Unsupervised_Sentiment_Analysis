@@ -243,7 +243,7 @@ data18['sentiments_val'] =data18['sentiments_val'].apply(lambda x: sentimentNum(
 data18['sentiments_val2'] =data18['sentiments_val2'].apply(lambda x: sentimentNum(x))
 data18['sentiments_val3'] =data18['sentiments_val3'].apply(lambda x: sentimentNum(x))
 ```
-Write a function to average the results and cluster into sentiments:
+Write a function to average the results and cluster them into sentiments:
 ```
 def sentimentAvg(val1, val2, val3):
     summ = val1 + val2 + val3
@@ -256,5 +256,23 @@ def sentimentAvg(val1, val2, val3):
 
 data18['sent_avg'] = data18.apply(lambda x: sentimentAvg(val1 = x['sentiments_val'], val2 = x['sentiments_val2'], val3 = x['sentiments_val3']), axis=1)
 ```
+Create a pie chart for the final average results (you can repeat the step for individual algorithms and compare results):
+```
+data_pie=data18["sent_avg"].value_counts().reset_index()
+fig = plt.gcf()
+fig.set_size_inches(7,7)
+colors = ["yellow","cyan","pink"]
+plt.pie(data_pie["sent_avg"],labels=data_pie["index"],radius=2,autopct="%1.1f%%", colors=colors)
+plt.axis('equal')
+plt.title("On Average: Sentiment Distribution of Tweets 2021", fontsize=20)
+#plt.savefig("images/Sentiment_Distribution.png")
+plt.show()
+data_pie
 
+plt.savefig("sent_dist_tweets_avg.png")
+```
+![final_results](images/avg_tweets2122.png)
+
+
+For the full code refer to 
 
