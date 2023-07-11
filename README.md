@@ -1,4 +1,4 @@
-<img src="images/DSL_logo1.png" width=30% height=30%>
+<img src="images/DSL_logo1.png" width=40% height=40%>
 
 ## Sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter.
 
