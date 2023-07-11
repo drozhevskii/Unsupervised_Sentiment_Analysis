@@ -14,13 +14,16 @@ The project's poster is available through [this link](reports/DSL_poster_v2.pdf)
 The full code is available [here](code/DSL_tweetsMine.ipynb).
 
 <details>
-  <summary>Project Overview:</summary>
+  <summary>Data:</summary>
   
-  #### Data
+  ### Data
   In this paper, the project collects and analyzes the contents of around 225,098 English tweets that discussed either the current general perception of carbon credits or the blockchain role in the transition to a net-zero carbon economy in the past 2 years period (1/1/2021 – 10/31/2022).
   
   The library used for data scraping is [snscrape](https://github.com/JustAnotherArchivist/snscrape)
   The code for the Twitter data scraping part is here.
+
+<details>
+  <summary>Methods:</summary>
   
   ### Methods
   + **K-Means**. First, I wanted to explore one of the most popular techniques for unsupervised sentiment analysis, K-Means clustering. The size of the dataset made it possible to create a large enough dictionary of words for the Word2vec model. I decided to work with 3 clusters: positive, negative, and neutral. The neutral cluster is supposed to collect possible spam tweets or tweets with not enough information for humans to determine the sentiment.
