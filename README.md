@@ -1,6 +1,5 @@
 ### Sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter.
-<img src="images/DSL_logo1.png" width=50% height=50%>
-#![DSL logo](images/DSL_logo1.png)
+<img src="images/DSL_logo1.png" width=30% height=30%>
 [Dynamic Sustainability Lab](https://www.dynamicslab.org/)
 
 I was working on a solo project of sentiment analysis of public opinions on the blockchain approach for carbon credit markets on Twitter. 
